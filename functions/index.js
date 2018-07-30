@@ -14,7 +14,8 @@ exports.checkToken = functions.https.onRequest(function (request, response) {
     adminManager.auth().verifyIdToken(userGeneratedToken)
         .then(function (decodedToken) {
             responseMsg = {
-                "Result": "OK"
+                "Result": "OK",
+                "displayName": decodedToken["displayName"]
             }
             response.setHeader('Content-Type', 'application/json');
             response.status(200).send(JSON.stringify(responseMsg))
