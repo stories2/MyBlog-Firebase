@@ -13,10 +13,14 @@ exports.checkToken = functions.https.onRequest(function (request, response) {
     userGeneratedToken = request.body["token"]
     adminManager.auth().verifyIdToken(userGeneratedToken)
         .then(function (decodedToken) {
+
+            console.log("decoded user info: ", JSON.stringify(decodedToken))
+
             responseMsg = {
                 "Result": "OK",
-                "displayName": decodedToken["displayName"]
+                "displayName": decodedToken["name"]
             }
+
             response.setHeader('Content-Type', 'application/json');
             response.status(200).send(JSON.stringify(responseMsg))
         })
